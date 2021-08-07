@@ -24,4 +24,7 @@ public class Member {
 
     @Column(name="video_count")
     private String video_count;
+
+    @Column(name="thumbnail")
+    private String thumbnail;
 }

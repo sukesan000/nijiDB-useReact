@@ -31,4 +31,9 @@ public class NijidbRepository {
         }
         return memberList;
     };
+
+    public void insertOne(String subscriber, String videoCount, String thumbnail, int id) {
+        jdbcTemplate.update(
+                "UPDATE member SET subscriber = ?, video_count = ?, thumbnail = ? WHERE id = ?", subscriber, videoCount, thumbnail, id);
+    }
 }

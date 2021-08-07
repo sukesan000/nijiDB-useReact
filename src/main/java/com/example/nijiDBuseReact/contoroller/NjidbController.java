@@ -21,7 +21,7 @@ public class NjidbController {
         List<Member> list = new ArrayList<Member>();
         list = njService.getAllChannelId();
         List<Channel> channelInfoList = njService.getChannelInfo(list);
-        System.out.println(channelInfoList);
+        njService.saveChannelInfo(channelInfoList, list);
         return "nijiDB";
     }
 }
