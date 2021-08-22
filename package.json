@@ -1,0 +1,20 @@
+{
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@chakra-ui/react": "^1.6.5",
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
+    "@types/react-router-dom": "^5.1.8",
+    "axios": "^0.21.1",
+    "framer-motion": "^4",
+    "react-router-dom": "^5.2.0"
+  },
+  "devDependencies": {
+    "husky": "^7.0.1",
+    "lint-staged": "^11.1.2"
+  },
+  "scripts": {
+    "prepare": "husky install",
+    "lint-staged": "lint-staged"
+  }
+}

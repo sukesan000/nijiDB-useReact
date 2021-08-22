@@ -36,4 +36,21 @@ public class NijidbRepository {
         jdbcTemplate.update(
                 "UPDATE member SET subscriber = ?, video_count = ?, thumbnail = ? WHERE id = ?", subscriber, videoCount, thumbnail, id);
     }
+
+    public List<Member> getALLChannelInfo(){
+        String sql = "select * from member";
+        List<Map<String, Object>> list = jdbcTemplate.queryForList(sql);
+        List<Member> memberList = new ArrayList<Member>();
+        for(Map<String, Object> result : list){
+            Member member = new Member();
+            member.setId((int)result.get("id"));
+            member.setChannel_id((String)result.get("channel_id"));
+            member.setName((String)result.get("name"));
+            member.setSubscriber((String)result.get("subscriber"));
+            member.setThumbnail((String)result.get("thumbnail"));
+            member.setVideo_count((String)result.get("video_count"));
+            memberList.add(member);
+        }
+        return memberList;
+    }
 }

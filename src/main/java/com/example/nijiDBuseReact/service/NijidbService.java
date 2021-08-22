@@ -81,4 +81,8 @@ public class NijidbService {
             i++;
         }
     }
+
+    public List<Member >getAllMemberInfo(){
+        return nijidbRepository.getALLChannelInfo();
+    }
 }
