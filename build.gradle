@@ -33,6 +33,12 @@ dependencies {
 	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.12.3'
 	implementation group: 'com.google.http-client', name: 'google-http-client-jackson2', version: '1.36.0'
 	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.22'
+	// https://mvnrepository.com/artifact/org.jsoup/jsoup
+	implementation group: 'org.jsoup', name: 'jsoup', version: '1.13.1'
+	// https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
+	implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
+	// https://mvnrepository.com/artifact/com.google.guava/guava
+	implementation group: 'com.google.guava', name: 'guava', version: '30.1.1-jre'
 }
 
 test {
