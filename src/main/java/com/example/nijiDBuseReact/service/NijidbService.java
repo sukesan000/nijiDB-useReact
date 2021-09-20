@@ -55,7 +55,7 @@ public class NijidbService {
         return nijidbRepository.getALLChannelId();
     }
 
-    public void saveChannelInfo(List<Channel> channelInfoList, List<Member> member){
+    public void saveChannelInfo(List<Channel> channelInfoList, List<Member> memberList){
         int i = 0;
         for(Channel channel : channelInfoList){
             String channelId = channel.getId();
@@ -64,19 +64,18 @@ public class NijidbService {
             int videoCount = channel.getStatistics().getVideoCount().intValue();
             String subscriver_ = String.format("%,d", subscriver);
             String videoCount_ = String.format("%,d", videoCount);
-            System.out.println(videoCount_);
 
             //entityに記録されているid
-            String id = member.get(i).getChannel_id();
+            String id = memberList.get(i).getChannel_id();
             //entityにセット
             if(channelId.equals(id)){
-                member.get(i).setSubscriber(subscriver_);
-                member.get(i).setVideo_count(videoCount_);
-                member.get(i).setThumbnail(thumbnail);
-                nijidbRepository.insertOne(member.get(i).getSubscriber(),
-                        member.get(i).getVideo_count(),
-                        member.get(i).getThumbnail(),
-                        member.get(i).getId());
+                memberList.get(i).setSubscriber(subscriver_);
+                memberList.get(i).setVideo_count(videoCount_);
+                memberList.get(i).setThumbnail(thumbnail);
+                nijidbRepository.updateOne(memberList.get(i).getSubscriber(),
+                        memberList.get(i).getVideo_count(),
+                        memberList.get(i).getThumbnail(),
+                        memberList.get(i).getChannel_id());
             }
             i++;
         }
@@ -84,5 +83,9 @@ public class NijidbService {
 
     public List<Member >getAllMemberInfo(){
         return nijidbRepository.getALLChannelInfo();
+    }
+
+    public void saveIdAndData(String id,String name){
+        nijidbRepository.insertOne(id,name);
     }
 }

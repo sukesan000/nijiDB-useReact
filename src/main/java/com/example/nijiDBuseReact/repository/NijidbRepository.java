@@ -32,10 +32,15 @@ public class NijidbRepository {
         return memberList;
     };
 
-    public void insertOne(String subscriber, String videoCount, String thumbnail, int id) {
+    public void updateOne(String subscriber, String videoCount, String thumbnail, String chId) {
         jdbcTemplate.update(
-                "UPDATE member SET subscriber = ?, video_count = ?, thumbnail = ? WHERE id = ?", subscriber, videoCount, thumbnail, id);
-    }
+                "UPDATE member SET subscriber = ?, video_count = ?, thumbnail = ? WHERE channel_id = ?", subscriber, videoCount, thumbnail, chId);
+    };
+
+    public void insertOne(String chId , String name) {
+        jdbcTemplate.update(
+                "INSERT INTO member (channel_id, name) select ?, ? WHERE NOT EXISTS (select channel_id from member where channel_id = ?)", chId, name, chId);
+    };
 
     public List<Member> getALLChannelInfo(){
         String sql = "select * from member";

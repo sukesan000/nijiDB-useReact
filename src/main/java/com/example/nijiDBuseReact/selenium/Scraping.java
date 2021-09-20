@@ -1,28 +1,40 @@
 package com.example.nijiDBuseReact.selenium;
 import com.example.nijiDBuseReact.entity.Member;
+import com.example.nijiDBuseReact.service.NijidbService;
+import com.google.api.services.youtube.model.Channel;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class Scraping {
+@Component
+public class Scraping{
+    @Autowired
+    private NijidbService njService;
 
-
-    public static void main(String[] args) throws IOException {
+    @Scheduled(cron = " 0 0 12 * * *", zone = "Asia/Tokyo")
+    public void saveMemberInfo() throws IOException {
         Document document = Jsoup.connect("https://refined-itsukara-link.neet.love/livers").get();
         List<Member> memberList = new ArrayList<>();
 
         //System.out.println(document);
         Elements hrefs = document.select("a[href*=YouTube]");
+        int idNum = 0;
         for (Element element: hrefs){
             Member member = new Member();
             String href = element.attr("href");
             member.setChannel_id(href.substring(32));
+            member.setId(idNum);
             memberList.add(member);
+            idNum++;
         }
 
         int num = 0;
@@ -33,9 +45,16 @@ public class Scraping {
             member.setName(name);
             num++;
         }
+
+        //名前とidをDBにセット
         for(Member member: memberList){
-            System.out.print(member.getChannel_id());
-            System.out.println(member.getName());
+            String id = member.getChannel_id();
+            String name = member.getName();
+            njService.saveIdAndData(id, name);
         }
+
+        List<Channel> channelInfoList = njService.getChannelInfo(memberList);
+        njService.saveChannelInfo(channelInfoList, memberList);
+        System.out.println("バッチが動きました！");
     }
 }
