@@ -4,5 +4,4 @@ export type Member = {
   channel_id: string
   subscriber: string
   thumbnail: string
-  video_count: string
 }

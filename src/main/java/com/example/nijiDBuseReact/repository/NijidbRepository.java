@@ -34,7 +34,7 @@ public class NijidbRepository {
 
     public void updateOne(String subscriber, String videoCount, String thumbnail, String chId) {
         jdbcTemplate.update(
-                "UPDATE member SET subscriber = ?, video_count = ?, thumbnail = ? WHERE channel_id = ?", subscriber, videoCount, thumbnail, chId);
+                "U PDATE member SET subscriber = ?, video_count = ?, thumbnail = ? WHERE channel_id = ?", subscriber, videoCount, thumbnail, chId);
     };
 
     public void insertOne(String chId , String name) {
@@ -48,7 +48,7 @@ public class NijidbRepository {
         List<Member> memberList = new ArrayList<Member>();
         for(Map<String, Object> result : list){
             Member member = new Member();
-            member.setId((int)result.get("id"));
+            //member.setId((int)result.get("id"));
             member.setChannel_id((String)result.get("channel_id"));
             member.setName((String)result.get("name"));
             member.setSubscriber((String)result.get("subscriber"));

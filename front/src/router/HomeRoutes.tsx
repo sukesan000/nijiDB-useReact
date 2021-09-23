@@ -2,7 +2,7 @@ import { Main } from 'components/pages/Main'
 
 export const homeRoutes = [
   {
-    path: '',
+    path: 'nijiDB',
     exact: true,
     children: <Main />,
   },
