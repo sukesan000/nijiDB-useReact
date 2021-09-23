@@ -15,7 +15,7 @@ export const MemberCard: VFC<Props> = memo((props) => {
   }
 
   return (
-    <Box p={4} w="200px" h="300px" bg="white" borderRadius="10px" shadow="md">
+    <Box p={4} w="200px" h="290px" bg="white" borderRadius="10px" shadow="md">
       <Stack textAlign="center">
         <Image
           boxSize="160px"
