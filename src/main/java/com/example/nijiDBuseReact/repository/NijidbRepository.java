@@ -1,11 +1,13 @@
 package com.example.nijiDBuseReact.repository;
 
 import com.example.nijiDBuseReact.entity.Member;
+import com.google.api.client.util.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -32,9 +34,9 @@ public class NijidbRepository {
         return memberList;
     };
 
-    public void updateOne(String subscriber, String videoCount, String thumbnail, String chId) {
+    public void updateOne(String subscriber, String videoCount, String thumbnail, String chId, Date publishedAt) {
         jdbcTemplate.update(
-                "U PDATE member SET subscriber = ?, video_count = ?, thumbnail = ? WHERE channel_id = ?", subscriber, videoCount, thumbnail, chId);
+                "UPDATE member SET subscriber = ?, video_count = ?, thumbnail = ? ,published_at = ? WHERE channel_id = ?", subscriber, videoCount, thumbnail, publishedAt, chId);
     };
 
     public void insertOne(String chId , String name) {
@@ -43,7 +45,7 @@ public class NijidbRepository {
     };
 
     public List<Member> getALLChannelInfo(){
-        String sql = "select * from member";
+        String sql = "select * from member order by published_at asc;";
         List<Map<String, Object>> list = jdbcTemplate.queryForList(sql);
         List<Member> memberList = new ArrayList<Member>();
         for(Map<String, Object> result : list){

@@ -7,6 +7,7 @@ import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.DateTime;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.Channel;
 import com.google.api.services.youtube.model.ChannelListResponse;
@@ -15,8 +16,11 @@ import org.springframework.stereotype.Service;
 
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -60,6 +64,17 @@ public class NijidbService {
         for(Channel channel : channelInfoList){
             String channelId = channel.getId();
             String thumbnail = channel.getSnippet().getThumbnails().getHigh().getUrl();
+            Date publishedAt_ = null;
+            DateTime publishedAt =  channel.getSnippet().getPublishedAt();
+            String datetimeStr = publishedAt.toString();
+            int n = datetimeStr.indexOf("T");
+            String dateStr = datetimeStr.substring(0, n);
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            try{
+                publishedAt_ = format.parse(dateStr);
+            }catch (ParseException e) {
+                e.printStackTrace();
+            }
             int subscriver = channel.getStatistics().getSubscriberCount().intValue();
             int videoCount = channel.getStatistics().getVideoCount().intValue();
             String subscriver_ = String.format("%,d", subscriver);
@@ -72,10 +87,12 @@ public class NijidbService {
                 memberList.get(i).setSubscriber(subscriver_);
                 memberList.get(i).setVideo_count(videoCount_);
                 memberList.get(i).setThumbnail(thumbnail);
+                memberList.get(i).setPublished_at(publishedAt_);
                 nijidbRepository.updateOne(memberList.get(i).getSubscriber(),
                         memberList.get(i).getVideo_count(),
                         memberList.get(i).getThumbnail(),
-                        memberList.get(i).getChannel_id());
+                        memberList.get(i).getChannel_id(),
+                        memberList.get(i).getPublished_at());
             }
             i++;
         }

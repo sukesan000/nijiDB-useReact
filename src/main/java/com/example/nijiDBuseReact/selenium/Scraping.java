@@ -20,7 +20,7 @@ public class Scraping{
     @Autowired
     private NijidbService njService;
 
-    @Scheduled(cron = " 0 0 12 * * *", zone = "Asia/Tokyo")
+    @Scheduled(cron = " 0 0 1 * * *", zone = "Asia/Tokyo")
     public void saveMemberInfo() throws IOException {
         Document document = Jsoup.connect("https://refined-itsukara-link.neet.love/livers").get();
         List<Member> memberList = new ArrayList<>();

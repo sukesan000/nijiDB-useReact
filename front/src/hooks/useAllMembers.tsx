@@ -9,7 +9,7 @@ export const useAllMembers = () => {
 
   const getMembers = useCallback(() => {
     axios
-      .get<Array<Member>>('http://localhost:8080/aaa')
+      .get<Array<Member>>('http://localhost:8080/nijidb')
       .then((res) => {
         setMembers(res.data)
       })

@@ -1,8 +1,10 @@
 package com.example.nijiDBuseReact.entity;
 
+import com.google.api.client.util.DateTime;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Data
 @Entity
@@ -27,4 +29,7 @@ public class Member {
 
     @Column(name="thumbnail")
     private String thumbnail;
+
+    @Column(name="published_at")
+    private Date published_at;
 }
