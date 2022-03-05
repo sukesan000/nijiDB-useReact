@@ -59,6 +59,10 @@ public class NijidbService {
         return nijidbRepository.getALLChannelId();
     }
 
+    public List<Member> findMember(String kewword){
+        return nijidbRepository.findMember(kewword);
+    }
+
     public void saveChannelInfo(List<Channel> channelInfoList, List<Member> memberList){
         int i = 0;
         for(Channel channel : channelInfoList){

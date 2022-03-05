@@ -2,14 +2,10 @@ package com.example.nijiDBuseReact.contoroller;
 
 import com.example.nijiDBuseReact.entity.Member;
 import com.example.nijiDBuseReact.service.NijidbService;
-import com.google.api.services.youtube.model.Channel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,6 +17,13 @@ public class NjidbController {
     @GetMapping("/nijidb")
     public List<Member> main() throws IOException {
         List<Member> memberInfoList = njService.getAllMemberInfo();
+        return memberInfoList;
+    }
+
+    @PostMapping("/nijidb/search/{word}")
+    public List<Member> search(@PathVariable("word") String keyword){
+        List<Member> memberInfoList = njService.findMember(keyword);
+        System.out.println(memberInfoList);
         return memberInfoList;
     }
 }

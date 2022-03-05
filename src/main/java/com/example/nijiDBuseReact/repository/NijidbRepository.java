@@ -60,4 +60,21 @@ public class NijidbRepository {
         }
         return memberList;
     }
+
+    public  List<Member> findMember(String keyword) {
+        String sql = "select * from member where name like '%" + keyword + "%'";
+        List<Map<String, Object>> list = jdbcTemplate.queryForList(sql);
+        List<Member> memberList = new ArrayList<Member>();
+        for (Map<String, Object> result : list) {
+            Member member = new Member();
+            member.setChannel_id((String)result.get("channel_id"));
+            member.setName((String)result.get("name"));
+            member.setSubscriber((String)result.get("subscriber"));
+            member.setThumbnail((String)result.get("thumbnail"));
+            member.setVideo_count((String)result.get("video_count"));
+            member.setPublished_at((Date)result.get("published_at"));
+            memberList.add(member);
+        }
+        return memberList;
+    }
 }
