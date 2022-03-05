@@ -1,7 +1,7 @@
 import { Box, Wrap, WrapItem, Flex, Input, Button } from '@chakra-ui/react'
 import axios from 'axios'
 import { MemberCard } from 'components/organisms/layout/member/MemberCard'
-import { useFindMembers } from 'hooks/useFindMembers'
+import { useMessage } from 'hooks/useMessage'
 import { memo, useEffect, useState, VFC } from 'react'
 import { Member } from 'types/api/member'
 
@@ -10,11 +10,18 @@ export const Main: VFC = memo(() => {
     [],
   )
   const [word, setWord] = useState<string>('')
-  const { searchMember, resMembers } = useFindMembers()
+  const { showMessage } = useMessage()
   const onChangeWord = (e: any) => setWord(e.target.value)
   const OnClickFindMembers = () => {
-    searchMember(word)
-    setMembers(resMembers)
+    const api = 'http://localhost:8080/nijidb/search/' + word
+    axios
+      .post<Array<Member>>(api)
+      .then((res) => {
+        setMembers(res.data)
+      })
+      .catch(() => {
+        showMessage({ title: 'ユーザ取得に失敗しました', status: 'error' })
+      })
   }
 
   useEffect(() => {
