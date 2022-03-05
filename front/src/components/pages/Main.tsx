@@ -45,6 +45,12 @@ export const Main: VFC = memo(() => {
             <Flex justify="center">
               <Input
                 onChange={onChangeWord}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault()
+                    OnClickFindMembers()
+                  }
+                }}
                 borderRadius="full"
                 shadow="lg"
                 placeholder="ライバー名"
